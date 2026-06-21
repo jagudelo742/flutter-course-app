@@ -23,10 +23,14 @@ flutter:
     - assets/images/
 
   fonts:
-  - family: Lokeya
-    fonts: 
-      - asset: assets/fonts/Lokeya.ttf
-      - asset: assets/fonts/Lokeya Alternate.ttf
-      - asset: assets/fonts/Roboto.ttf
-      - asset: assets/fonts/Roboto-Italic.ttf
-        weight: 700
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto.ttf
+        - asset: assets/fonts/Roboto-Italic.ttf
+          style: italic
+
+    - family: RobotoMono
+      fonts:
+        - asset: assets/fonts/RobotoMono.ttf
+        - asset: assets/fonts/RobotoMono-Italic.ttf
+          style: italic

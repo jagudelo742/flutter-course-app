@@ -27,8 +27,129 @@ class HomePage extends StatelessWidget {
       body: Column(
         children: [
           const TopBodyWidget(),
-          Placeholder(fallbackHeight: 70),
-          Expanded(child: Placeholder(color: Colors.red)),
+          MyBodyWidget(),
+          Expanded(
+            child: Container(
+              decoration: const BoxDecoration(
+                color: MyColors.brandSecondaryColor,
+              ),
+              child: ListView(
+                padding: const EdgeInsets.all(16),
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      print('Soy ver todo');
+                    },
+                    style: TextButton.styleFrom(alignment: Alignment.topRight),
+                    child: Text(
+                      'View All',
+                      style: TextStyle(
+                        color: MyColors.brandPrimaryColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                        fontFamily: 'Roboto',
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(color: MyColors.brandLightColor,
+                    borderRadius: BorderRadius.all(Radius.circular(16))),
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 79,
+                          width: 56,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(16)),
+                            color: MyColors.brandSecondaryColor,
+                          ),
+                          child: Container(
+                            margin: EdgeInsets.all(12),
+                            height: 40,
+                            width: 40,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage('assets/images/pizza.png'),
+                              ),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(12),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class MyBodyWidget extends StatelessWidget {
+  const MyBodyWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
+        ),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      child: Row(
+        children: [
+          Expanded(
+            child: ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: MyColors.brandSecondaryColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: Text(
+                  ' Categories',
+                  style: TextStyle(
+                    color: MyColors.brandDarkColor,
+                    fontFamily: 'Roboto',
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: MyColors.brandLightColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: Text(
+                  ' Resent Transactions',
+                  style: TextStyle(
+                    color: MyColors.brandDarkColor,
+                    fontFamily: 'Roboto',
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -36,9 +157,7 @@ class HomePage extends StatelessWidget {
 }
 
 class TopBodyWidget extends StatelessWidget {
-  const TopBodyWidget({
-    super.key,
-  });
+  const TopBodyWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +276,7 @@ class SummaryCardTemp extends StatelessWidget {
                   'From January 1 to January 31',
                   style: TextStyle(
                     color: MyColors.brandLightColor,
-                    fontFamily: 'Roboto',
+                    fontFamily: 'RobotoMono-Italic',
                     fontSize: 10,
                   ),
                 ),
