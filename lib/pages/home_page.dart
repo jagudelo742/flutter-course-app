@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_course/app.dart';
 import 'package:flutter_course/design/colors.dart';
 import 'package:flutter_course/design/radius.dart';
 import 'package:flutter_course/widgets/home_app_bar_title.dart';
@@ -25,64 +26,168 @@ class HomePage extends StatelessWidget {
         ),
       ),
       body: Column(
+        children: [const TopBodyWidget(), MyBodyWidget(), BodyFooter()],
+      ),
+    );
+  }
+}
+
+class BodyFooter extends StatelessWidget {
+  const BodyFooter({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        decoration: const BoxDecoration(color: MyColors.brandSecondaryColor),
+        child: ListView(
+          padding: const EdgeInsets.all(16),
+          children: [
+            TextButton(
+              onPressed: () {
+                print('Soy ver todo');
+              },
+              style: TextButton.styleFrom(alignment: Alignment.topRight),
+              child: Text(
+                'View All',
+                style: TextStyle(
+                  color: MyColors.brandPrimaryColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                  fontFamily: 'Roboto',
+                ),
+              ),
+            ),
+            CategoryDetail(
+              pathToProductImage: 'assets/images/pizza.png',
+              title: 'Food And Drink',
+              amount: 2550,
+              otherAmount: 123.23,
+              percent: 1.8,
+            ),
+            CategoryDetail(
+              pathToProductImage: 'assets/images/healthcare.png',
+              title: 'Health',
+              amount: 3550,
+              otherAmount: 1233.23,
+              percent: 1.4,
+            ),
+            CategoryDetail(
+              pathToProductImage: 'assets/images/television.png',
+              title: 'Tecnology',
+              amount: 4970,
+              otherAmount: 22200.23,
+              percent: 1.9,
+            ),
+            //CategoryDetail(),
+            //CategoryDetail(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CategoryDetail extends StatelessWidget {
+  final String pathToProductImage;
+  final String title;
+  final double amount;
+  final double otherAmount;
+  final double percent;
+  const CategoryDetail({
+    super.key,
+    required this.pathToProductImage,
+    required this.amount,
+    required this.otherAmount,
+    required this.percent,
+    required this.title,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: MyColors.brandLightColor,
+        borderRadius: BorderRadius.all(Radius.circular(16)),
+      ),
+      child: Row(
         children: [
-          const TopBodyWidget(),
-          MyBodyWidget(),
+          Container(
+            height: 79,
+            width: 56,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(16)),
+              color: MyColors.brandSecondaryColor,
+            ),
+            child: Container(
+              margin: EdgeInsets.all(12),
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                image: DecorationImage(image: AssetImage(pathToProductImage)),
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+              ),
+            ),
+          ),
           Expanded(
             child: Container(
-              decoration: const BoxDecoration(
-                color: MyColors.brandSecondaryColor,
-              ),
-              child: ListView(
-                padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TextButton(
-                    onPressed: () {
-                      print('Soy ver todo');
-                    },
-                    style: TextButton.styleFrom(alignment: Alignment.topRight),
-                    child: Text(
-                      'View All',
-                      style: TextStyle(
-                        color: MyColors.brandPrimaryColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13,
-                        fontFamily: 'Roboto',
-                      ),
+                  Text(
+                    title,
+                    style: TextStyle(
+                      color: MyColors.brandDarkColor,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: 'Roboto',
+                      fontSize: 18,
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(color: MyColors.brandLightColor,
-                    borderRadius: BorderRadius.all(Radius.circular(16))),
-                    child: Row(
-                      children: [
-                        Container(
-                          height: 79,
-                          width: 56,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(16)),
-                            color: MyColors.brandSecondaryColor,
-                          ),
-                          child: Container(
-                            margin: EdgeInsets.all(12),
-                            height: 40,
-                            width: 40,
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage('assets/images/pizza.png'),
-                              ),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(12),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                  Text(
+                    '\$ $amount Today',
+                    style: TextStyle(
+                      color: MyColors.brandLightDarkColor,
+                      fontFamily: 'Roboto',
+                      fontSize: 10,
+                    ),
+                  ),
+                  CurrencyFormatter(
+                    amount: otherAmount,
+                    padding: const EdgeInsets.only(top: 4, right: 2),
+                    amountStyle: TextStyle(
+                      color: MyColors.brandPrimaryColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                    amountStyleSmall: TextStyle(
+                      color: MyColors.brandPrimaryColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 10,
                     ),
                   ),
                 ],
               ),
+            ),
+          ),
+          Container(
+            //padding : EdgeInsets.all(8),
+            width: 60,
+            margin: const EdgeInsets.only(bottom: 70),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              color: MyColors.brandSuccessColor,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.expand_less, color: MyColors.brandOnSuccessColor),
+                Text(
+                  '$percent %',
+                  style: TextStyle(color: MyColors.brandOnSuccessColor),
+                ),
+              ],
             ),
           ),
         ],

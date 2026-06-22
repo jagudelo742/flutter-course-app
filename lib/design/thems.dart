@@ -7,9 +7,9 @@ class MyThemes {
         fontFamily: 'Roboto',
         primaryColor: MyColors.brandPrimaryColor,
         textTheme: const TextTheme(
-          displayLarge: TextStyle(fontSize: 48, fontWeight: FontWeight.bold, color: MyColors.brandSecondaryColor),
-          displayMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: MyColors.brandSecondaryColor),
-          displaySmall: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: MyColors.brandSecondaryColor),
+          displayLarge: TextStyle(fontSize: 48, fontWeight: FontWeight.bold, color: MyColors.brandSecondary),
+          displayMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: MyColors.brandSecondary),
+          displaySmall: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: MyColors.brandSecondary),
           headlineLarge: TextStyle(fontSize: 21, color: MyColors.brandPrimaryColor),
           bodyLarge: TextStyle(fontSize: 14),
           bodyMedium: TextStyle(fontSize: 13),

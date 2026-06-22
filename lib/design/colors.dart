@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class MyColors {
 static const Color brandPrimaryColor = Color.fromRGBO(53, 97, 254, 1);
   static const Color brandSecondaryColor = Color.fromARGB(255, 210, 210, 210);
+  static const Color brandSecondary = Color.fromARGB(255, 255, 255, 255);
   static const Color brandLightColor = Colors.white;
   static const Color brandLightColorBorder = Color.fromRGBO(210, 228, 255, 1);
   static const Color brandLightColorOpacity = Color.fromRGBO(255, 255, 255, 0.2);
