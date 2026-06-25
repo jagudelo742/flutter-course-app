@@ -5,9 +5,15 @@ import 'package:flutter_course/design/radius.dart';
 import 'package:flutter_course/widgets/home_app_bar_title.dart';
 import 'package:intl/intl.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  Widget currentDetailWidget = const ResentTransactions();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +32,168 @@ class HomePage extends StatelessWidget {
         ),
       ),
       body: Column(
-        children: [const TopBodyWidget(), MyBodyWidget(), BodyFooter()],
+        children: [
+          const TopBodyWidget(),
+          MyBodyWidget(
+            actionBtnCategory: () {
+              setState(() {
+                currentDetailWidget = ResentTransactions();
+              });
+            },
+            actionBtnResent: () {
+              setState(() {
+                currentDetailWidget = Text('Prueba');
+              });
+            },
+          ),
+          currentDetailWidget,
+        ],
+      ),
+    );
+  }
+}
+
+class ResentTransactions extends StatelessWidget {
+  const ResentTransactions({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        decoration: BoxDecoration(color: MyColors.brandSecondaryColor),
+        child: ListView(
+          children: [
+            TextButton(
+              onPressed: () => 'Soy ver todo resent',
+              style: ButtonStyle(alignment: Alignment.topRight),
+              child: Text(
+                'View all',
+                style: TextStyle(color: MyColors.brandPrimaryColor),
+              ),
+            ),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 12,
+                  ),
+                  child: Column(
+                    spacing: 3,
+                    children: [
+                      Text(
+                        'TUE',
+                        style: TextStyle(
+                          color: MyColors.brandLightDarkColor,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Roboto',
+                        ),
+                      ),
+                      Text(
+                        '4',
+                        style: TextStyle(
+                          color: MyColors.brandDarkColor,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          fontFamily: 'Roboto',
+                        ),
+                      ),
+                      Icon(
+                        Icons.circle,
+                        color: MyColors.brandOnSuccessColor,
+                        size: 10,
+                      ),
+                    ],
+                  ),
+                ),
+
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            color: MyColors.brandLightColor,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(16),
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(8),
+                                    ),
+                                    color: MyColors.brandSuccessColor,
+                                  ),
+                                  child: Icon(
+                                    Icons.expand_less,
+                                    color: MyColors.brandOnSuccessColor,
+                                  ),
+                                ),
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Movement name',
+                                    style: TextStyle(
+                                      fontFamily: 'Roboto',
+                                      color: MyColors.brandDarkColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Tuesday 4th, September 2026',
+                                    style: TextStyle(
+                                      color: MyColors.brandLightDarkColor,
+                                      fontSize: 9,
+                                      fontFamily: 'Roboto',
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Spacer(),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: CurrencyFormatter(
+                                  amount: 420.10,
+                                  amountStyle: TextStyle(
+                                    color: MyColors.brandDarkColor,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16,
+                                  ),
+                                  amountStyleSmall: TextStyle(
+                                    color: MyColors.brandDarkColor,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                                
+                              ),
+                              
+                            ],
+                          ),
+                        ),
+                        
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            
+          ],
+        ),
       ),
     );
   }
@@ -59,6 +226,7 @@ class BodyFooter extends StatelessWidget {
               ),
             ),
             CategoryDetail(
+              typeCategoryDetail: TypeCategoryDetail.up,
               pathToProductImage: 'assets/images/pizza.png',
               title: 'Food And Drink',
               amount: 2550,
@@ -66,6 +234,7 @@ class BodyFooter extends StatelessWidget {
               percent: 1.8,
             ),
             CategoryDetail(
+              typeCategoryDetail: TypeCategoryDetail.down,
               pathToProductImage: 'assets/images/healthcare.png',
               title: 'Health',
               amount: 3550,
@@ -73,14 +242,13 @@ class BodyFooter extends StatelessWidget {
               percent: 1.4,
             ),
             CategoryDetail(
+              typeCategoryDetail: TypeCategoryDetail.up,
               pathToProductImage: 'assets/images/television.png',
               title: 'Tecnology',
               amount: 4970,
               otherAmount: 22200.23,
               percent: 1.9,
             ),
-            //CategoryDetail(),
-            //CategoryDetail(),
           ],
         ),
       ),
@@ -88,7 +256,10 @@ class BodyFooter extends StatelessWidget {
   }
 }
 
+enum TypeCategoryDetail { up, down }
+
 class CategoryDetail extends StatelessWidget {
+  final TypeCategoryDetail typeCategoryDetail;
   final String pathToProductImage;
   final String title;
   final double amount;
@@ -101,103 +272,136 @@ class CategoryDetail extends StatelessWidget {
     required this.otherAmount,
     required this.percent,
     required this.title,
+    required this.typeCategoryDetail,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: MyColors.brandLightColor,
-        borderRadius: BorderRadius.all(Radius.circular(16)),
-      ),
-      child: Row(
-        children: [
-          Container(
-            height: 79,
-            width: 56,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(16)),
-              color: MyColors.brandSecondaryColor,
-            ),
-            child: Container(
-              margin: EdgeInsets.all(12),
-              height: 40,
-              width: 40,
+    var iconUp = const Icon(
+      Icons.expand_less,
+      color: MyColors.brandSuccessColor,
+    );
+    var downColorContainer = MyColors.brandErrorColor;
+    var iconDown = const Icon(
+      Icons.expand_more,
+      color: MyColors.brandOnErrorColor,
+    );
+    var upColorContainer = MyColors.brandSuccessColor;
+    var percentDownColor = MyColors.brandOnErrorColor;
+    var percentUpColor = MyColors.brandOnSuccessColor;
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: Container(
+        padding: EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: MyColors.brandLightColor,
+          borderRadius: BorderRadius.all(Radius.circular(16)),
+        ),
+        child: Row(
+          children: [
+            Container(
+              height: 79,
+              width: 56,
               decoration: BoxDecoration(
-                image: DecorationImage(image: AssetImage(pathToProductImage)),
-                borderRadius: BorderRadius.all(Radius.circular(12)),
+                borderRadius: BorderRadius.all(Radius.circular(16)),
+                color: MyColors.brandSecondaryColor,
+              ),
+              child: Container(
+                margin: EdgeInsets.all(12),
+                height: 40,
+                width: 40,
+                decoration: BoxDecoration(
+                  image: DecorationImage(image: AssetImage(pathToProductImage)),
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
+                ),
               ),
             ),
-          ),
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyle(
+                        color: MyColors.brandDarkColor,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: 'Roboto',
+                        fontSize: 18,
+                      ),
+                    ),
+                    Text(
+                      '\$ $amount Today',
+                      style: TextStyle(
+                        color: MyColors.brandLightDarkColor,
+                        fontFamily: 'Roboto',
+                        fontSize: 10,
+                      ),
+                    ),
+                    CurrencyFormatter(
+                      amount: otherAmount,
+                      padding: const EdgeInsets.only(top: 4, right: 2),
+                      amountStyle: TextStyle(
+                        color: MyColors.brandPrimaryColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                      amountStyleSmall: TextStyle(
+                        color: MyColors.brandPrimaryColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 10,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              //padding : EdgeInsets.all(8),
+              width: 60,
+              margin: const EdgeInsets.only(bottom: 70),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                color: typeCategoryDetail == TypeCategoryDetail.up
+                    ? upColorContainer
+                    : downColorContainer,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  typeCategoryDetail == TypeCategoryDetail.up
+                      ? iconUp
+                      : iconDown,
+
+                  //Icon(Icons.expand_less, color: MyColors.brandOnSuccessColor),
                   Text(
-                    title,
+                    '$percent %',
                     style: TextStyle(
-                      color: MyColors.brandDarkColor,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: 'Roboto',
-                      fontSize: 18,
-                    ),
-                  ),
-                  Text(
-                    '\$ $amount Today',
-                    style: TextStyle(
-                      color: MyColors.brandLightDarkColor,
-                      fontFamily: 'Roboto',
-                      fontSize: 10,
-                    ),
-                  ),
-                  CurrencyFormatter(
-                    amount: otherAmount,
-                    padding: const EdgeInsets.only(top: 4, right: 2),
-                    amountStyle: TextStyle(
-                      color: MyColors.brandPrimaryColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                    amountStyleSmall: TextStyle(
-                      color: MyColors.brandPrimaryColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 10,
+                      color: typeCategoryDetail == TypeCategoryDetail.up
+                          ? percentUpColor
+                          : percentDownColor,
                     ),
                   ),
                 ],
               ),
             ),
-          ),
-          Container(
-            //padding : EdgeInsets.all(8),
-            width: 60,
-            margin: const EdgeInsets.only(bottom: 70),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              color: MyColors.brandSuccessColor,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.expand_less, color: MyColors.brandOnSuccessColor),
-                Text(
-                  '$percent %',
-                  style: TextStyle(color: MyColors.brandOnSuccessColor),
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
 
 class MyBodyWidget extends StatelessWidget {
-  const MyBodyWidget({super.key});
+  final Function()? actionBtnCategory;
+  final Function()? actionBtnResent;
+  const MyBodyWidget({
+    super.key,
+    required this.actionBtnCategory,
+    required this.actionBtnResent,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -213,7 +417,7 @@ class MyBodyWidget extends StatelessWidget {
         children: [
           Expanded(
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: actionBtnCategory,
               style: ElevatedButton.styleFrom(
                 backgroundColor: MyColors.brandSecondaryColor,
                 shape: RoundedRectangleBorder(
@@ -235,7 +439,7 @@ class MyBodyWidget extends StatelessWidget {
           ),
           Expanded(
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: actionBtnResent,
               style: ElevatedButton.styleFrom(
                 backgroundColor: MyColors.brandLightColor,
                 shape: RoundedRectangleBorder(
@@ -381,7 +585,7 @@ class SummaryCardTemp extends StatelessWidget {
                   'From January 1 to January 31',
                   style: TextStyle(
                     color: MyColors.brandLightColor,
-                    fontFamily: 'RobotoMono-Italic',
+                    fontFamily: 'Roboto-Italic',
                     fontSize: 10,
                   ),
                 ),
