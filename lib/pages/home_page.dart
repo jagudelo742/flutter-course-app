@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Widget currentDetailWidget = const ResentTransactions();
+  Widget currentDetailWidget = const BodyFooter();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,12 +37,12 @@ class _HomePageState extends State<HomePage> {
           MyBodyWidget(
             actionBtnCategory: () {
               setState(() {
-                currentDetailWidget = ResentTransactions();
+                currentDetailWidget = BodyFooter();
               });
             },
             actionBtnResent: () {
               setState(() {
-                currentDetailWidget = Text('Prueba');
+                currentDetailWidget = ResentTransactions();
               });
             },
           ),
@@ -62,139 +62,264 @@ class ResentTransactions extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(color: MyColors.brandSecondaryColor),
         child: ListView(
+          padding: EdgeInsets.all(16),
           children: [
             TextButton(
-              onPressed: () => 'Soy ver todo resent',
+              onPressed: () => print('Soy ver todo resent'),
               style: ButtonStyle(alignment: Alignment.topRight),
               child: Text(
-                'View all',
-                style: TextStyle(color: MyColors.brandPrimaryColor),
+                'View All',
+                style: TextStyle(
+                  color: MyColors.brandPrimaryColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                  fontFamily: 'Roboto',
+                ),
               ),
             ),
+            ViewResentTransactions(
+              day: 'tue',
+              numDay: 6,
+              showPointGreen: false,
+            ),
+            ViewResentTransactions(day: 'TUE', numDay: 7, showPointGreen: true),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ViewResentTransactions extends StatelessWidget {
+  final String day;
+  final int numDay;
+  final bool showPointGreen;
+  const ViewResentTransactions({
+    super.key,
+    required this.day,
+    required this.numDay,
+    required this.showPointGreen,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Column(
+          spacing: 3,
+          children: [
+            DateIcon(day: day, num: numDay, showPointGreen: showPointGreen),
+          ],
+        ),
+
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                color: MyColors.brandLightColor,
+                borderRadius: const BorderRadius.all(Radius.circular(16)),
+              ),
+
+              child: Column(
+                children: [
+                  RowResentTransactions(
+                    typeResentTransaction: TypeResentTransaction.red,
+                    title1: 'Movement Name',
+                    text: 'Tuesday 4th, September 2026',
+                    amount: 420.10,
+                  ),
+                  Divider(height: 1),
+                  RowResentTransactions(
+                    typeResentTransaction: TypeResentTransaction.green,
+                    title1: 'Movement Name',
+                    text: 'Tuesday 4th, September 2026',
+                    amount: 420.10,
+                  ),
+                  Divider(height: 1),
+                  RowResentTransactions(
+                    typeResentTransaction: TypeResentTransaction.red,
+                    title1: 'Movement Name',
+                    text: 'Tuesday 4th, September 2026',
+                    amount: 420.10,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+enum TypeResentTransaction { red, green }
+
+class RowResentTransactions extends StatelessWidget {
+  final TypeResentTransaction typeResentTransaction;
+  final String title1;
+  final String text;
+  final double amount;
+  const RowResentTransactions({
+    super.key,
+    required this.typeResentTransaction,
+    required this.title1,
+    required this.text,
+    required this.amount,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    var containerRed = MyColors.brandErrorColor;
+    var containerGreen = MyColors.brandSuccessColor;
+    var iconRed = MyColors.brandOnErrorColor;
+    var iconGreen = MyColors.brandOnSuccessColor;
+    var blackColor = MyColors.brandDarkColor;
+    var iconExpandLess = Icon(
+      Icons.expand_less,
+      color: typeResentTransaction == TypeResentTransaction.green
+          ? iconGreen
+          : iconRed,
+    );
+    var iconExpandMore = Icon(
+      Icons.expand_more,
+      color: typeResentTransaction == TypeResentTransaction.green
+          ? iconGreen
+          : iconRed,
+    );
+    return Column(
+      children: [
+        Column(
+          children: [
             Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 12,
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      color:
+                          typeResentTransaction == TypeResentTransaction.green
+                          ? containerGreen
+                          : containerRed,
+                    ),
+                    child: typeResentTransaction == TypeResentTransaction.green
+                        ? iconExpandLess
+                        : iconExpandMore,
                   ),
-                  child: Column(
-                    spacing: 3,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title1,
+                      style: TextStyle(
+                        fontFamily: 'Roboto',
+                        color: MyColors.brandDarkColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Text(
+                      text,
+                      style: TextStyle(
+                        color: MyColors.brandLightDarkColor,
+                        fontSize: 9,
+                        fontFamily: 'Roboto',
+                      ),
+                    ),
+                  ],
+                ),
+                Spacer(),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
                     children: [
-                      Text(
-                        'TUE',
-                        style: TextStyle(
-                          color: MyColors.brandLightDarkColor,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Roboto',
+                      if (typeResentTransaction == TypeResentTransaction.red)
+                        Text(
+                          '-',
+                          style: TextStyle(
+                            color:
+                                typeResentTransaction ==
+                                    TypeResentTransaction.green
+                                ? blackColor
+                                : iconRed,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                          ),
                         ),
-                      ),
-                      Text(
-                        '4',
-                        style: TextStyle(
-                          color: MyColors.brandDarkColor,
-                          fontSize: 18,
+                      CurrencyFormatter(
+                        amount: amount,
+                        amountStyle: TextStyle(
+                          color:
+                              typeResentTransaction ==
+                                  TypeResentTransaction.green
+                              ? blackColor
+                              : iconRed,
                           fontWeight: FontWeight.w700,
-                          fontFamily: 'Roboto',
+                          fontSize: 16,
                         ),
-                      ),
-                      Icon(
-                        Icons.circle,
-                        color: MyColors.brandOnSuccessColor,
-                        size: 10,
+                        amountStyleSmall: TextStyle(
+                          color:
+                              typeResentTransaction ==
+                                  TypeResentTransaction.green
+                              ? blackColor
+                              : iconRed,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 12,
+                        ),
                       ),
                     ],
                   ),
                 ),
-
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.rectangle,
-                            color: MyColors.brandLightColor,
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(16),
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  width: 40,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(8),
-                                    ),
-                                    color: MyColors.brandSuccessColor,
-                                  ),
-                                  child: Icon(
-                                    Icons.expand_less,
-                                    color: MyColors.brandOnSuccessColor,
-                                  ),
-                                ),
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Movement name',
-                                    style: TextStyle(
-                                      fontFamily: 'Roboto',
-                                      color: MyColors.brandDarkColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Tuesday 4th, September 2026',
-                                    style: TextStyle(
-                                      color: MyColors.brandLightDarkColor,
-                                      fontSize: 9,
-                                      fontFamily: 'Roboto',
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Spacer(),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: CurrencyFormatter(
-                                  amount: 420.10,
-                                  amountStyle: TextStyle(
-                                    color: MyColors.brandDarkColor,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16,
-                                  ),
-                                  amountStyleSmall: TextStyle(
-                                    color: MyColors.brandDarkColor,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                
-                              ),
-                              
-                            ],
-                          ),
-                        ),
-                        
-                      ],
-                    ),
-                  ),
-                ),
               ],
             ),
-            
           ],
         ),
-      ),
+      ],
+    );
+  }
+}
+
+class DateIcon extends StatelessWidget {
+  final int num;
+  final String day;
+  final bool showPointGreen;
+  const DateIcon({
+    super.key,
+    required this.num,
+    required this.day,
+    this.showPointGreen = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          (day.toUpperCase()),
+          style: TextStyle(
+            color: MyColors.brandLightDarkColor,
+            fontSize: 15,
+            fontWeight: FontWeight.w500,
+            fontFamily: 'Roboto',
+          ),
+        ),
+        Text(
+          ('$num'),
+          style: TextStyle(
+            color: MyColors.brandDarkColor,
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+            fontFamily: 'Roboto',
+          ),
+        ),
+        if (showPointGreen)
+          Icon(Icons.circle, color: MyColors.brandOnSuccessColor, size: 10),
+      ],
     );
   }
 }
