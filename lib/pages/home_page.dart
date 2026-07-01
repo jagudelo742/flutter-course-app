@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Widget currentDetailWidget = const ResentTransactions();
+  Widget currentDetailWidget = const BodyFooter();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
           MyBodyWidget(
             actionBtnCategory: () {
               setState(() {
-                currentDetailWidget = ResentTransactions();
+                currentDetailWidget = BodyFooter();
               });
             },
             actionBtnResent: () {
@@ -57,7 +57,7 @@ class ResentTransactions extends StatelessWidget {
   const ResentTransactions({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
     return Expanded(
       child: Container(
         decoration: BoxDecoration(color: MyColors.brandSecondaryColor),
@@ -212,7 +212,7 @@ class BodyFooter extends StatelessWidget {
           children: [
             TextButton(
               onPressed: () {
-                print('Soy ver todo');
+                Navigator.of(context).pushNamed('new-page');
               },
               style: TextButton.styleFrom(alignment: Alignment.topRight),
               child: Text(
