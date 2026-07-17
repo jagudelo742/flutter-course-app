@@ -57,7 +57,7 @@ class ResentTransactions extends StatelessWidget {
   const ResentTransactions({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
     return Expanded(
       child: Container(
         decoration: BoxDecoration(color: MyColors.brandSecondaryColor),
@@ -337,7 +337,7 @@ class BodyFooter extends StatelessWidget {
           children: [
             TextButton(
               onPressed: () {
-                print('Soy ver todo');
+                Navigator.of(context).pushNamed('new-page');
               },
               style: TextButton.styleFrom(alignment: Alignment.topRight),
               child: Text(
