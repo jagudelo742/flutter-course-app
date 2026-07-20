@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_course/config/app_routes.dart';
-import 'package:flutter_course/design/thems.dart';
-import 'package:flutter_course/models/user.dart';
-import 'package:flutter_course/pages/home_page.dart';
-import 'package:flutter_course/pages/new_page.dart';
+import 'package:flutter_course/config/routes/app_routes.dart';
+import 'package:flutter_course/core/design/thems.dart';
+import 'package:flutter_course/features/home/models/user.dart';
+import 'package:flutter_course/features/home/presentation/pages/home_page.dart';
 import 'package:flutter_course/pages/other_page.dart';
+import 'package:flutter_course/pages/second_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -13,19 +13,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: MyThemes.myDefaultTheme,
-      /* routes: {
-        AppRoutes.newPage: (context) => NewPage(),
-        AppRoutes.otherPage: (context) => OtherPage(),
-        AppRoutes.home: (context) => HomePage(),
-      }, */
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case AppRoutes.newPage:
             return MaterialPageRoute(builder: (context) => const NewPage());
           case AppRoutes.otherPage:
-          return MaterialPageRoute(builder: (context) =>  OtherPage(userData: settings.arguments as User));  
+            return MaterialPageRoute(
+              builder: (context) =>
+                  OtherPage(userData: settings.arguments as User),
+            );
           default:
-            return MaterialPageRoute(builder: (context) => const  HomePage());
+            return MaterialPageRoute(builder: (context) => const HomePage());
         }
       },
     );

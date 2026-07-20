@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_course/config/app_routes.dart';
-import 'package:flutter_course/models/user.dart';
+import 'package:flutter_course/features/home/models/user.dart';
 
 class OtherPage extends StatelessWidget {
   final User userData;
@@ -9,19 +8,13 @@ class OtherPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Other Page')),
-      body: Center(
-        child: Column(
-          children: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Home'),
-            ),
-          ],
+      appBar: AppBar(title: Text('This is a other page'),),
+      body: Center(child: TextButton(
+        onPressed: () => Navigator.pop(context),
+        child: Text(
+          'This is a other page again, my name is ${userData.name} tengo ${userData.age} anos'
         ),
-      ),
+      ),),
     );
   }
 }
