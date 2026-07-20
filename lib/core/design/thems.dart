@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_course/design/colors.dart';
+import 'package:flutter_course/core/design/colors.dart';
 
 class MyThemes {
   MyThemes._();
