@@ -8,7 +8,8 @@ import 'package:flutter_course/features/home/presentation/widgets/resent_transac
 import 'package:flutter_course/features/home/presentation/widgets/top_body_widget.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final String userName;
+  const HomePage({super.key, required this.userName});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -30,7 +31,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: MyColors.brandLightColor,
         title: Padding(
           padding: const EdgeInsets.fromLTRB(16, 45, 16, 12),
-          child: HomeAppBarTitle(),
+          child: HomeAppBarTitle(userName: widget.userName),
         ),
       ),
       body: Column(

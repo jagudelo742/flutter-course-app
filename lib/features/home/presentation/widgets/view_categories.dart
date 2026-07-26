@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_course/config/routes/app_routes.dart';
 import 'package:flutter_course/core/design/colors.dart';
 import 'package:flutter_course/features/home/presentation/widgets/category_detail_widget.dart';
 
@@ -15,7 +16,7 @@ class ViewCategories extends StatelessWidget {
           children: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pushNamed('new-page');
+                Navigator.of(context).pushNamed(AppRoutes.newPage);
               },
               style: TextButton.styleFrom(alignment: Alignment.topRight),
               child: Text(

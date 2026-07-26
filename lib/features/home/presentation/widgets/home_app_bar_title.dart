@@ -3,7 +3,8 @@ import 'package:flutter_course/core/design/colors.dart';
 import 'package:flutter_course/features/home/presentation/widgets/container_header_icon.dart';
 
 class HomeAppBarTitle extends StatelessWidget {
-  const HomeAppBarTitle({super.key});
+  final String userName;
+  const HomeAppBarTitle({super.key, required this.userName});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class HomeAppBarTitle extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  'Pipe Shop',
+                  userName,
                   style: Theme.of(context).textTheme.headlineLarge,
                 ),
               ),

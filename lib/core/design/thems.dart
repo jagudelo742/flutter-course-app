@@ -14,6 +14,9 @@ class MyThemes {
           bodyLarge: TextStyle(fontSize: 14),
           bodyMedium: TextStyle(fontSize: 13),
           bodySmall: TextStyle(fontSize: 10),
+          labelLarge: TextStyle(fontSize: 30, fontWeight:  FontWeight.bold, color: MyColors.brandPrimaryColor),
+          labelMedium: TextStyle(fontSize: 20, fontWeight:  FontWeight.w400, color: MyColors.brandLightDarkColor),
+          labelSmall: TextStyle(fontSize: 16, fontWeight:  FontWeight.bold, color: MyColors.brandDarkColor)
         ),
       );
 }
